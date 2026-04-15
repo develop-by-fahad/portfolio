@@ -1,13 +1,820 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fahad Afran Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0085FF',
+                        dark: '#1A1A1A',
+                        light: '#F8F9FA',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #0085FF;
+            --dark: #1A1A1A;
+            --light: #F8F9FA;
+        }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: white;
+            color: var(--dark);
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        html.dark body {
+            background-color: #0F172A;
+            color: #F8F9FA;
+        }
+
+        .dark .bg-white { background-color: #0F172A !important; }
+        .dark .text-dark { color: #F8F9FA !important; }
+        .dark .text-dark\/60 { color: rgba(248, 249, 250, 0.6) !important; }
+        .dark .text-dark\/40 { color: rgba(248, 249, 250, 0.4) !important; }
+        .dark .text-dark\/80 { color: rgba(248, 249, 250, 0.8) !important; }
+        .dark .text-dark\/70 { color: rgba(248, 249, 250, 0.7) !important; }
+        .dark .bg-\[\#F8F9FA\] { background-color: #1E293B !important; }
+        .dark .border-dark\/5 { border-color: rgba(255, 255, 255, 0.1) !important; }
+        .dark .nav-scrolled { background-color: rgba(15, 23, 42, 0.8) !important; }
+        .dark #mobile-menu { background-color: #0F172A !important; }
+        .dark .text-black { color: #FFFFFF !important; }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .dark .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5) !important; }
+        .dark .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4) !important; }
+        .dark .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6) !important; }
+        .dark input, .dark textarea {
+            background-color: #1E293B !important;
+            color: white !important;
+        }
+        .dark ::placeholder {
+            color: rgba(255, 255, 255, 0.3) !important;
+        }
+
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .dark .theme-toggle {
+            border-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+        }
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            background: var(--light);
+        }
+        .dark .theme-toggle:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, var(--primary), #00C2FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 2rem;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 700;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 133, 255, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: #0076E5;
+            transform: scale(1.05);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 133, 255, 0.2);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 133, 255, 0.4);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-float {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 3s ease-in-out infinite;
+        }
+
+        .nav-scrolled {
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+            background-color: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(12px) !important;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .mobile-menu-open {
+            display: flex !important;
+        }
+
+        /* Progress Bar Animation */
+        @keyframes progressLoad {
+            from { width: 0; }
+            to { width: var(--target-width); }
+        }
+        .progress-fill {
+            width: 0;
+            animation: progressLoad 2s cubic-bezier(0.1, 0.5, 0.2, 1) forwards;
+            animation-delay: 0.5s;
+        }
+
+        /* WhatsApp Popup */
+        .wa-popup {
+            position: fixed;
+            bottom: 40px;
+            right: 96px;
+            background: white;
+            padding: 10px 18px;
+            border-radius: 12px 12px 2px 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            font-weight: 500;
+            font-size: 13px;
+            color: var(--dark);
+            z-index: 59;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+            pointer-events: none;
+            max-width: 220px;
+            line-height: 1.4;
+        }
+        .wa-popup.show {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+        .dark .wa-popup {
+            background: #1E293B;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .wa-popup::after {
+            content: '';
+            position: absolute;
+            bottom: 12px;
+            right: -8px;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid white;
+        }
+        .dark .wa-popup::after {
+            border-left-color: #1E293B;
+        }
+        .wa-close {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 24px;
+            height: 24px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            z-index: 61;
+        }
+        .wa-close:hover {
+            transform: scale(1.1);
+            background: #dc2626;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-8 bg-transparent">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-black tracking-tighter flex items-center gap-1 text-black hover:scale-105 transition-transform">
+                Fahad<span class="text-[#0085FF]">.</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center space-x-10 relative" id="desktop-nav">
+                <a href="#" class="nav-link text-sm font-medium text-[#0085FF] transition-colors" data-section="home">Home</a>
+                <a href="#portfolio" class="nav-link text-sm font-medium text-dark/60 hover:text-[#0085FF] transition-colors" data-section="portfolio">Works</a>
+                <a href="#services" class="nav-link text-sm font-medium text-dark/60 hover:text-[#0085FF] transition-colors" data-section="services">Services</a>
+                <a href="#about" class="nav-link text-sm font-medium text-dark/60 hover:text-[#0085FF] transition-colors" data-section="about">About me</a>
+            </div>
+
+            <div class="hidden md:block">
+                <a href="#contact" class="btn-primary text-sm">LET'S TALK</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="theme-toggle text-dark">
+                    <i id="theme-icon" data-lucide="moon" size="20"></i>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="menu-btn" class="md:hidden text-dark">
+                    <i data-lucide="menu" size="28"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="absolute top-full left-0 w-full bg-white shadow-xl p-6 hidden flex-col space-y-4 md:hidden">
+            <a href="#" class="text-lg font-medium text-dark/80 hover:text-[#0085FF]">Home</a>
+            <a href="#portfolio" class="text-lg font-medium text-dark/80 hover:text-[#0085FF]">Works</a>
+            <a href="#services" class="text-lg font-medium text-dark/80 hover:text-[#0085FF]">Services</a>
+            <a href="#about" class="text-lg font-medium text-dark/80 hover:text-[#0085FF]">About me</a>
+            <a href="#contact" class="btn-primary w-full">LET'S TALK</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen pt-32 pb-20 relative overflow-hidden flex items-center bg-white">
+        <!-- Background Elements -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-[#0085FF]/5 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#0085FF]/10 rounded-full blur-[120px] pointer-events-none"></div>
+        
+        <!-- Floating shapes -->
+        <div class="absolute top-1/3 left-[15%] w-12 h-12 border-4 border-dark/5 rounded-full pointer-events-none animate-float"></div>
+        <div class="absolute bottom-1/3 left-[20%] w-8 h-8 bg-dark/5 rounded-full pointer-events-none animate-float" style="animation-delay: 1s;"></div>
+
+        <div class="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            <!-- Left Content -->
+            <div class="lg:col-span-4 space-y-8">
+                <div>
+                    <h2 class="text-2xl font-medium text-dark/80 mb-2">Hello, I'm<span class="text-[#0085FF]">.</span></h2>
+                    <h1 class="text-7xl md:text-8xl font-black tracking-tighter text-dark mb-6">FAHAD<span class="text-[#0085FF]">.</span></h1>
+                    <p class="text-dark/60 text-lg leading-relaxed max-w-md">
+                        a tech enthusiast skilled in design, AI content creation, coding, and social media growth. 
+                        I love building smart digital solutions that help businesses grow and connect with people.
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-6">
+                    <div class="inline-flex items-center gap-3 px-6 py-3 bg-white rounded-full shadow-sm border border-dark/5 w-fit">
+                        <i data-lucide="mail" size="18" class="text-[#0085FF]"></i>
+                        <span class="text-sm font-medium text-dark/70">fahadafran07@gmail.com</span>
+                    </div>
+                    
+                    <div class="flex flex-wrap items-center gap-4">
+                        <a href="https://www.facebook.com/yourfahad07" target="_blank" class="flex items-center gap-2 px-6 py-3 bg-[#1877F2] text-white rounded-full shadow-lg shadow-blue-500/20 font-bold text-sm hover:scale-105 transition-transform">
+                            <i data-lucide="facebook" size="18"></i> Facebook
+                        </a>
+                        <a href="https://www.instagram.com/fahadafran07" target="_blank" class="flex items-center gap-2 px-6 py-3 bg-gradient-to-tr from-[#FFB000] via-[#FF0069] to-[#AD00FF] text-white rounded-full shadow-lg shadow-pink-500/20 font-bold text-sm hover:scale-105 transition-transform">
+                            <i data-lucide="instagram" size="18"></i> Instagram
+                        </a>
+                        <a href="https://wa.me/8801746692155" target="_blank" class="flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white rounded-full shadow-lg shadow-green-500/20 font-bold text-sm hover:scale-105 transition-transform">
+                            <i data-lucide="message-circle" size="18"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Image -->
+            <div class="lg:col-span-4 relative flex justify-center">
+                <div class="relative z-10">
+                    <div class="absolute inset-0 bg-[#0085FF]/5 rounded-[60px] blur-3xl -z-10"></div>
+                    <img src="https://i.postimg.cc/sDjmM1nS/eh.png" alt="Fahad" class="w-full max-w-[450px] h-auto object-contain rounded-[60px] shadow-2xl grayscale-[0.2] hover:grayscale-0 transition-all duration-500">
+                </div>
+            </div>
+
+            <!-- Right Cards -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-white p-4 rounded-3xl shadow-sm border border-dark/5 flex items-center gap-6 group cursor-pointer hover:-translate-x-2 transition-transform">
+                    <div class="w-20 h-20 rounded-2xl overflow-hidden bg-[#F8F9FA] shrink-0">
+                        <img src="https://i.pinimg.com/736x/f6/e3/2a/f6e32a2c67c5a3465569fa073ad187b1.jpg" alt="Designer" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-base font-bold text-dark">Designer</h3>
+                            <span class="text-[10px] font-black text-[#0085FF] bg-[#0085FF]/10 px-2 py-0.5 rounded-full">95%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-[#0085FF]/10 rounded-full overflow-hidden">
+                            <div class="progress-fill h-full bg-[#0085FF] rounded-full" style="--target-width: 95%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-3xl shadow-sm border border-dark/5 flex items-center gap-6 group cursor-pointer hover:-translate-x-2 transition-transform">
+                    <div class="w-20 h-20 rounded-2xl overflow-hidden bg-[#F8F9FA] shrink-0">
+                        <img src="https://i.pinimg.com/736x/66/1f/3f/661f3fc1bb00293ee3cbe882c33c0007.jpg" alt="Vibe coding" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-base font-bold text-dark">Vibe coding</h3>
+                            <span class="text-[10px] font-black text-[#0085FF] bg-[#0085FF]/10 px-2 py-0.5 rounded-full">88%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-[#0085FF]/10 rounded-full overflow-hidden">
+                            <div class="progress-fill h-full bg-[#0085FF] rounded-full" style="--target-width: 88%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-3xl shadow-sm border border-dark/5 flex items-center gap-6 group cursor-pointer hover:-translate-x-2 transition-transform">
+                    <div class="w-20 h-20 rounded-2xl overflow-hidden bg-[#F8F9FA] shrink-0">
+                        <img src="https://i.pinimg.com/1200x/5f/e0/6a/5fe06a92c1ce934b4dcad6f2fb40d5b9.jpg" alt="Creative executive" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-base font-bold text-dark">Creative executive</h3>
+                            <span class="text-[10px] font-black text-[#0085FF] bg-[#0085FF]/10 px-2 py-0.5 rounded-full">92%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-[#0085FF]/10 rounded-full overflow-hidden">
+                            <div class="progress-fill h-full bg-[#0085FF] rounded-full" style="--target-width: 92%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 bg-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div class="relative">
+                <div class="absolute -top-10 -left-10 w-40 h-40 bg-[#0085FF]/5 rounded-full blur-3xl"></div>
+                <div class="relative z-10 rounded-[60px] overflow-hidden shadow-2xl">
+                    <img src="https://images.pexels.com/photos/36633935/pexels-photo-36633935.png" alt="About Me" class="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-700">
+                </div>
+                <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-[#0085FF]/10 rounded-full blur-[100px] -z-10"></div>
+            </div>
+
+            <div class="space-y-8">
+                <div class="space-y-4">
+                    <h2 class="text-sm font-bold text-[#0085FF] uppercase tracking-[0.3em]">About Me</h2>
+                    <h3 class="text-5xl md:text-6xl font-black text-dark leading-tight">I DESIGN FOR <br><span class="text-gradient">HUMAN CONNECTION</span></h3>
+                </div>
+                <p class="text-dark/60 text-lg leading-relaxed">
+                    I am a tech enthusiast skilled in design, AI content creation, coding, and social media growth. 
+                    I love building smart digital solutions that help businesses grow and connect with people.
+                </p>
+                <div class="grid grid-cols-2 gap-8 py-8 border-y border-dark/5">
+                    <div>
+                        <p class="text-4xl font-black text-dark mb-1">5+</p>
+                        <p class="text-sm text-dark/40 uppercase tracking-widest">Years Experience</p>
+                    </div>
+                    <div>
+                        <p class="text-4xl font-black text-dark mb-1">50+</p>
+                        <p class="text-sm text-dark/40 uppercase tracking-widest">Projects Completed</p>
+                    </div>
+                </div>
+                <button class="btn-primary">Download CV</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-32 bg-[#F8F9FA]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-sm font-bold text-[#0085FF] uppercase tracking-[0.3em] mb-4">My Expertise</h2>
+                <h3 class="text-5xl md:text-6xl font-black text-dark">WHAT I <span class="text-gradient">OFFER</span></h3>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 md:gap-8">
+                <!-- Service 1 -->
+                <div class="group relative h-[200px] md:h-[400px] rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500">
+                    <img src="https://i.pinimg.com/1200x/ba/52/60/ba52604f696b15ea05fbbf7a553c4eb3.jpg" alt="Graphic Design" class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/40 to-transparent"></div>
+                    <div class="absolute inset-0 p-4 md:p-10 flex flex-col justify-end">
+                        <div class="w-10 h-10 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#0085FF] text-white flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="palette" class="w-5 h-5 md:w-8 md:h-8"></i>
+                        </div>
+                        <h4 class="text-lg md:text-3xl font-bold text-white mb-1 md:mb-4">Graphic Design</h4>
+                        <p class="hidden md:block text-white/70 text-lg max-w-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            Creating stunning visual identities and marketing materials that stand out.
+                        </p>
+                    </div>
+                </div>
+                <!-- Service 2 -->
+                <div class="group relative h-[200px] md:h-[400px] rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500">
+                    <img src="https://i.pinimg.com/736x/94/95/0d/94950da78cd126f2a0f08d9b4ceaf0e9.jpg" alt="Web Developer" class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/40 to-transparent"></div>
+                    <div class="absolute inset-0 p-4 md:p-10 flex flex-col justify-end">
+                        <div class="w-10 h-10 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#0085FF] text-white flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="code" class="w-5 h-5 md:w-8 md:h-8"></i>
+                        </div>
+                        <h4 class="text-lg md:text-3xl font-bold text-white mb-1 md:mb-4">Web Developer</h4>
+                        <p class="hidden md:block text-white/70 text-lg max-w-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            Building fast, responsive, and scalable web applications using modern tech.
+                        </p>
+                    </div>
+                </div>
+                <!-- Service 3 -->
+                <div class="group relative h-[200px] md:h-[400px] rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500">
+                    <img src="https://i.pinimg.com/1200x/0b/3c/e2/0b3ce2c0d4fd7df7e63e25b631c27712.jpg" alt="Prompt Engineer" class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/40 to-transparent"></div>
+                    <div class="absolute inset-0 p-4 md:p-10 flex flex-col justify-end">
+                        <div class="w-10 h-10 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#0085FF] text-white flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="cpu" class="w-5 h-5 md:w-8 md:h-8"></i>
+                        </div>
+                        <h4 class="text-lg md:text-3xl font-bold text-white mb-1 md:mb-4">Prompt Engineer</h4>
+                        <p class="hidden md:block text-white/70 text-lg max-w-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            Optimizing AI interactions to generate high-quality content and solutions.
+                        </p>
+                    </div>
+                </div>
+                <!-- Service 4 -->
+                <div class="group relative h-[200px] md:h-[400px] rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500">
+                    <img src="https://i.pinimg.com/736x/0a/3b/79/0a3b7994befcd7eacd35b2c5b6120823.jpg" alt="Social Media Manager" class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/40 to-transparent"></div>
+                    <div class="absolute inset-0 p-4 md:p-10 flex flex-col justify-end">
+                        <div class="w-10 h-10 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#0085FF] text-white flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="share-2" class="w-5 h-5 md:w-8 md:h-8"></i>
+                        </div>
+                        <h4 class="text-lg md:text-3xl font-bold text-white mb-1 md:mb-4">Social Media Manager</h4>
+                        <p class="hidden md:block text-white/70 text-lg max-w-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            Growing your online presence and engaging with your audience effectively.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                <div>
+                    <h2 class="text-sm font-bold text-[#0085FF] uppercase tracking-[0.3em] mb-4">My Works</h2>
+                    <h3 class="text-5xl md:text-6xl font-black text-dark leading-tight pl-[23px] ml-0 mt-[-2px] pb-0 mr-[30px]">SELECTED <br><span class="text-gradient">PROJECTS</span></h3>
+                </div>
+                <p class="text-dark/40 max-w-md text-lg leading-relaxed">
+                    A collection of my recent work across various disciplines, 
+                    focusing on clean aesthetics and functional design.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Project 1 -->
+                <div class="group cursor-pointer">
+                    <div class="relative aspect-[16/10] rounded-[40px] overflow-hidden shadow-2xl mb-8">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" alt="Fintech" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                        <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/20 transition-colors duration-500"></div>
+                        <div class="absolute top-8 right-8 w-14 h-14 rounded-full bg-white text-dark flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                            <i data-lucide="external-link" size="24"></i>
+                        </div>
+                    </div>
+                    <div class="px-4">
+                        <p class="text-sm font-bold text-[#0085FF] uppercase tracking-widest mb-2">UI/UX Design</p>
+                        <h4 class="text-3xl font-black text-dark group-hover:text-[#0085FF] transition-colors">Fintech Dashboard</h4>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="group cursor-pointer">
+                    <div class="relative aspect-[16/10] rounded-[40px] overflow-hidden shadow-2xl mb-8">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" alt="E-commerce" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                        <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/20 transition-colors duration-500"></div>
+                        <div class="absolute top-8 right-8 w-14 h-14 rounded-full bg-white text-dark flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                            <i data-lucide="external-link" size="24"></i>
+                        </div>
+                    </div>
+                    <div class="px-4">
+                        <p class="text-sm font-bold text-[#0085FF] uppercase tracking-widest mb-2">Mobile Design</p>
+                        <h4 class="text-3xl font-black text-dark group-hover:text-[#0085FF] transition-colors">E-commerce App</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-20 text-center">
+                <button class="px-12 py-5 border-2 border-dark/5 rounded-full font-bold hover:bg-dark hover:text-white transition-all">View All Projects</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 bg-[#F8F9FA] relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="text-sm font-bold text-[#0085FF] uppercase tracking-[0.3em] mb-4">Get In Touch</h2>
+                <h3 class="text-5xl md:text-6xl font-black text-dark">LET'S <span class="text-gradient">CONNECT</span></h3>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                <div class="space-y-12">
+                    <div class="bg-white p-10 rounded-[40px] shadow-xl border border-dark/5">
+                        <h4 class="text-2xl font-bold mb-8 text-dark">Contact Info</h4>
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4 group">
+                                <div class="w-11 h-11 rounded-xl bg-[#0085FF]/10 text-[#0085FF] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                                    <i data-lucide="mail" size="20"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-bold text-dark/40 uppercase tracking-widest mb-0.5">Email</p>
+                                    <p class="text-base md:text-lg font-bold text-dark break-all">fahadafran07@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 group">
+                                <div class="w-11 h-11 rounded-xl bg-[#00C2FF]/10 text-[#00C2FF] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                                    <i data-lucide="phone" size="20"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-bold text-dark/40 uppercase tracking-widest mb-0.5">Phone</p>
+                                    <p class="text-base md:text-lg font-bold text-dark">+880 1746-692155</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 group">
+                                <div class="w-11 h-11 rounded-xl bg-dark/5 text-dark/40 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                                    <i data-lucide="map-pin" size="20"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-bold text-dark/40 uppercase tracking-widest mb-0.5">Location</p>
+                                    <p class="text-base md:text-lg font-bold text-dark">Bangladesh</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 md:p-10 rounded-[30px] md:rounded-[40px] shadow-xl border border-dark/5">
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-dark/40 uppercase tracking-widest ml-2">Name</label>
+                                <input type="text" id="contact-name" required placeholder="Your Name" class="w-full px-6 py-4 bg-[#F8F9FA] border border-dark/5 rounded-2xl focus:border-[#0085FF] outline-none transition-colors">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-dark/40 uppercase tracking-widest ml-2">Email</label>
+                                <input type="email" id="contact-email" required placeholder="Your Email" class="w-full px-6 py-4 bg-[#F8F9FA] border border-dark/5 rounded-2xl focus:border-[#0085FF] outline-none transition-colors">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-dark/40 uppercase tracking-widest ml-2">Phone Number</label>
+                            <input type="tel" id="contact-phone" required placeholder="Your Phone Number" class="w-full px-6 py-4 bg-[#F8F9FA] border border-dark/5 rounded-2xl focus:border-[#0085FF] outline-none transition-colors">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-dark/40 uppercase tracking-widest ml-2">Message</label>
+                            <textarea id="contact-message" required rows="4" placeholder="How can I help you?" class="w-full px-6 py-4 bg-[#F8F9FA] border border-dark/5 rounded-2xl focus:border-[#0085FF] outline-none transition-colors resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full flex items-center justify-center gap-3 py-5">
+                            <span>Send to WhatsApp</span>
+                            <i data-lucide="send" size="20"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 bg-white border-t border-dark/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-12">
+                <div class="text-center md:text-left">
+                    <h3 class="text-3xl font-black tracking-tighter mb-4 text-black">Fahad<span class="text-[#0085FF]">.</span></h3>
+                    <p class="text-dark/40 text-sm max-w-xs leading-relaxed">
+                        Crafting immersive digital experiences through technology and human-centric design.
+                    </p>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-12">
+                    <div class="flex flex-col gap-4">
+                        <span class="text-xs font-bold text-dark/20 uppercase tracking-widest">Navigation</span>
+                        <a href="#" class="text-sm font-bold text-dark/60 hover:text-[#0085FF] transition-colors">Home</a>
+                        <a href="#portfolio" class="text-sm font-bold text-dark/60 hover:text-[#0085FF] transition-colors">Works</a>
+                        <a href="#services" class="text-sm font-bold text-dark/60 hover:text-[#0085FF] transition-colors">Services</a>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <span class="text-xs font-bold text-dark/20 uppercase tracking-widest">Social</span>
+                        <a href="https://www.facebook.com/yourfahad07" target="_blank" class="text-sm font-bold text-dark/60 hover:text-[#0085FF] transition-colors">Facebook</a>
+                        <a href="https://www.instagram.com/fahadafran07" target="_blank" class="text-sm font-bold text-dark/60 hover:text-[#0085FF] transition-colors">Instagram</a>
+                        <a href="https://wa.me/8801746692155" target="_blank" class="text-sm font-bold text-dark/60 hover:text-[#0085FF] transition-colors">WhatsApp</a>
+                    </div>
+                </div>
+                
+                <div class="text-center md:text-right">
+                    <p class="text-xs font-bold text-dark/20 uppercase tracking-widest mb-4">© 2026 Fahad Afran</p>
+                    <div class="inline-block px-4 py-2 bg-[#0085FF]/5 rounded-full animate-pulse-soft">
+                        <span class="text-[10px] font-bold text-[#0085FF] uppercase tracking-widest">Available for hire</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div id="wa-popup" class="wa-popup">
+        <div id="wa-close" class="wa-close">
+            <i data-lucide="x" size="14"></i>
+        </div>
+        <div id="wa-msg-content">
+            Hi! How can I help you today? 👋
+        </div>
+    </div>
+    <a href="https://wa.me/8801746692155" target="_blank" class="fixed bottom-8 right-8 z-[60] w-16 h-16 bg-[#25D366] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform">
+        <i data-lucide="message-circle" size="32"></i>
+    </a>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('mobile-menu-open');
+            const icon = menuBtn.querySelector('i');
+            if (icon) {
+                if (mobileMenu.classList.contains('mobile-menu-open')) {
+                    icon.setAttribute('data-lucide', 'x');
+                } else {
+                    icon.setAttribute('data-lucide', 'menu');
+                }
+            }
+            lucide.createIcons();
+        });
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check for saved theme
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            if (themeIcon) themeIcon.setAttribute('data-lucide', 'sun');
+            lucide.createIcons();
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            // Update icon
+            if (themeIcon) themeIcon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+            lucide.createIcons();
+
+            // Professional effect: Scale animation
+            themeToggle.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                themeToggle.style.transform = 'scale(1)';
+            }, 100);
+        });
+
+        // WhatsApp Popup Logic
+        const messages = [
+            "Hi! How can I help you today? 👋",
+            "Need a custom solution? Let's chat on WhatsApp.",
+            "Available for new projects. Message me anytime!",
+            "Have a question? I'm here to help. 🚀"
+        ];
+
+        let currentMsgIndex = 0;
+        let isPopupDismissed = false;
+        const waPopup = document.getElementById('wa-popup');
+        const waMsgContent = document.getElementById('wa-msg-content');
+        const waClose = document.getElementById('wa-close');
+
+        function showNextMessage() {
+            if (isPopupDismissed || currentMsgIndex >= messages.length) return;
+
+            waMsgContent.innerHTML = messages[currentMsgIndex];
+            waPopup.classList.add('show');
+            lucide.createIcons();
+
+            // Show for 5 seconds, then hide and prepare next
+            setTimeout(() => {
+                if (!isPopupDismissed) {
+                    waPopup.classList.remove('show');
+                    currentMsgIndex++;
+                    
+                    // Wait 15 seconds before showing the next one (less annoying)
+                    if (currentMsgIndex < messages.length) {
+                        setTimeout(showNextMessage, 15000);
+                    }
+                }
+            }, 5000);
+        }
+
+        // Initial delay of 15 seconds
+        setTimeout(showNextMessage, 15000);
+
+        waClose.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            isPopupDismissed = true;
+            waPopup.classList.remove('show');
+        });
+
+        // Nav Logic
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Click handler
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(l => {
+                    l.classList.remove('text-[#0085FF]');
+                    l.classList.add('text-dark/60');
+                });
+                link.classList.remove('text-dark/60');
+                link.classList.add('text-[#0085FF]');
+            });
+        });
+
+        // WhatsApp Form Submission
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('contact-name').value;
+                const email = document.getElementById('contact-email').value;
+                const phone = document.getElementById('contact-phone').value;
+                const message = document.getElementById('contact-message').value;
+                
+                const whatsappNumber = "8801746692155";
+                const text = `*New Contact Form Submission*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Phone:* ${phone}%0A*Message:* ${message}`;
+                
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${text}`;
+                window.open(whatsappUrl, '_blank');
+            });
+        }
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('mobile-menu-open');
+                const icon = menuBtn.querySelector('i');
+                if (icon) icon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+    </script>
+</body>
+</html>
